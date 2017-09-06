@@ -9467,8 +9467,8 @@ document.addEventListener('DOMContentLoaded', function () {
             altSpellings: data[0].altSpellings,
             region: data[0].region,
             population: data[0].population,
-            timezones: data[0].timezones
-
+            area: data[0].area,
+            flag: data[0].flag
           });
         }).catch(function () {
           main.setState({
@@ -9488,8 +9488,8 @@ document.addEventListener('DOMContentLoaded', function () {
         altSpellings: undefined,
         region: undefined,
         population: undefined,
-        timezones: undefined
-
+        area: undefined,
+        flag: undefined
       };
       return _this;
     }
@@ -9508,7 +9508,8 @@ document.addEventListener('DOMContentLoaded', function () {
             altSpellings = _state.altSpellings,
             region = _state.region,
             population = _state.population,
-            timezones = _state.timezones,
+            area = _state.area,
+            flag = _state.flag,
             infoStatus = _state.infoStatus;
 
         var data = null;
@@ -9524,7 +9525,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 null,
                 name,
                 ' ',
-                _react2.default.createElement('span', null)
+                _react2.default.createElement('img', { src: flag })
               )
             ),
             _react2.default.createElement(
@@ -9582,12 +9583,18 @@ document.addEventListener('DOMContentLoaded', function () {
               _react2.default.createElement(
                 'div',
                 null,
-                'Timezones: ',
+                'Area: ',
                 _react2.default.createElement(
                   'span',
                   null,
                   ' ',
-                  timezones
+                  area,
+                  ' km',
+                  _react2.default.createElement(
+                    'sup',
+                    null,
+                    '2'
+                  )
                 )
               )
             )
@@ -9607,21 +9614,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return _react2.default.createElement(
           'div',
-          { className: 'CountryApp' },
+          null,
           _react2.default.createElement(
             'div',
-            { className: 'CountryQuery' },
+            { className: 'CountryApp' },
             _react2.default.createElement(
-              'form',
-              { onSubmit: this._handleSubmit },
-              _react2.default.createElement('input', {
-                type: 'text',
-                name: 'search',
-                placeholder: 'Search a Country...'
-              })
-            )
+              'div',
+              { className: 'CountryQuery' },
+              _react2.default.createElement(
+                'form',
+                { onSubmit: this._handleSubmit },
+                _react2.default.createElement('input', {
+                  type: 'text',
+                  name: 'search',
+                  placeholder: 'Search for a Country...'
+                })
+              )
+            ),
+            data
           ),
-          data
+          _react2.default.createElement(
+            'div',
+            { className: 'rotatingEarth' },
+            _react2.default.createElement('div', { id: 'earth' })
+          )
         );
       }
     }]);

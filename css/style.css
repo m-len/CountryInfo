@@ -1,0 +1,91 @@
+body {
+  background-image: url(https://c1.staticflickr.com/7/6042/6371834585_2cde7fc982_b.jpg);
+  background-repeat: no-repeat;
+  background-size: 100vw 160vh;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+form {
+  margin-top: 5%;
+  display: flex;
+}
+
+input {
+  width: 50%;
+  padding: 1%;
+  color: black;
+  border: none;
+  opacity: 0.5;
+  margin: 0 auto;
+}
+
+.countryName {
+  color: white;
+  font-weight: 800;
+  font-size: 35px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+img {
+  height: 35px;
+  width: auto;
+}
+
+.countryInfo {
+  color: white;
+  margin-left: 20%;
+  line-height: 150%;
+}
+
+sup {
+  font-size: 50%;
+}
+
+.rotatingEarth {
+display: block;
+align-items: center;
+}
+
+#earth {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 3em auto;
+  background: url(https://lh5.googleusercontent.com/-kkxEx-SkRaY/VBLF4BV2lZI/AAAAAAAAKao/FnKsv7402_c/s500/earthmap.jpg) 0 0 repeat;
+  border-radius: 50%;
+  background-size: 630px;
+  animation: rotate 20s linear infinite;
+  transition: transform 200ms linear;
+  transform-style: preserve-3d;
+  box-shadow: inset 20px 0 80px 6px rgba(0, 0, 0, 1);
+  color: #000;
+}
+
+#earth:after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: -80px 15px 80px 10px rgba(0,0,0,.9) inset;
+}
+
+#earth:before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
+  background: radial-gradient(circle at 100px 100px, #fff, #000);
+}
+
+@keyframes rotate {
+  0% {background-position: 0 0;}
+  100% {background-position: 630px 0;}
+}

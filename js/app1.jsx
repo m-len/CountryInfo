@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   altSpellings : undefined,
                   region : undefined,
                   population : undefined,
-                  timezones : undefined,
-
+                  area : undefined,
+                  flag : undefined,
                 };
               };
 
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     altSpellings : data[0].altSpellings,
                     region : data[0].region,
                     population : data[0].population,
-                    timezones : data[0].timezones,
-
+                    area : data[0].area,
+                    flag : data[0].flag,
                   });
                 })
                 .catch( function() {
@@ -83,21 +83,22 @@ document.addEventListener('DOMContentLoaded', () => {
                   altSpellings,
                   region,
                   population,
-                  timezones,
+                  area,
+                  flag,
                   infoStatus
                 } = this.state;
                 let data = null;
                 if (infoStatus == 'loaded') {
                   data = <div className="CountryInfo">
                       <div className="countryName">
-                        <div>{name} <span></span></div>
+                        <div>{name} <img src={flag}></img></div>
                       </div>
                       <div className="countryInfo">
                         <div>Capital: <span> {capital}</span></div>
                         <div>Alternative Names: <span> {altSpellings[0]}, {altSpellings[1]}, {altSpellings[2]} </span></div>
                         <div>Region: <span> {region}</span></div>
                         <div>Population: <span> {population}</span></div>
-                        <div>Timezones: <span> {timezones}</span></div>
+                        <div>Area: <span> {area} km<sup>2</sup></span></div>
                       </div>
                     </div>
                 } else if (infoStatus == 'loading') {
@@ -106,17 +107,21 @@ document.addEventListener('DOMContentLoaded', () => {
                   data = <div className="info error">Error while loading country data. Try again later.</div>
                 }
                 return (
-                  <div className="CountryApp">
-                    <div className="CountryQuery">
-                      <form onSubmit={this._handleSubmit}>
-                        <input
-                          type="text"
-                          name="search"
-                          placeholder="Search a Country..."
-                        />
-                      </form>
-                    </div>
-                    {data}
+                  <div>
+                      <div className="CountryApp">
+                        <div className="CountryQuery">
+                          <form onSubmit={this._handleSubmit}>
+                            <input
+                              type="text"
+                              name="search"
+                              placeholder="Search for a Country..."
+                            />
+                          </form>
+                        </div>
+                            {data}
+                      </div>
+
+                      <div className="rotatingEarth"><div id="earth"></div></div>
                   </div>
                 );
               };
