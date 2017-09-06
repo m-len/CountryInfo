@@ -9432,60 +9432,209 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var BookInfo = function (_React$Component) {
-        _inherits(BookInfo, _React$Component);
+  var CountryApp = function (_React$Component) {
+    _inherits(CountryApp, _React$Component);
 
-        function BookInfo(props) {
-            _classCallCheck(this, BookInfo);
+    function CountryApp(props) {
+      _classCallCheck(this, CountryApp);
 
-            var _this = _possibleConstructorReturn(this, (BookInfo.__proto__ || Object.getPrototypeOf(BookInfo)).call(this, props));
+      var _this = _possibleConstructorReturn(this, (CountryApp.__proto__ || Object.getPrototypeOf(CountryApp)).call(this, props));
 
-            _this.state = {
-                name: false
-            };
-            return _this;
+      _this._getCountryInfo = function (name) {
+        var main = _this;
+        var query = null;
+        main.setState({
+          infoStatus: 'loading'
+        });
+        if (!name || name == '') {
+          query = _this.props.name;
+        } else {
+          query = name;
         }
+        fetch('https://restcountries.eu/rest/v2/name/' + query + '?fullText=true').then(function (response) {
+          return response;
+        }).then(function (response) {
+          setTimeout(function () {
+            main.setState({
+              infoStatus: 'loaded'
+            });
+          }, 300);
+          return response.json();
+        }).then(function (data) {
+          main.setState({
+            name: data[0].name,
+            capital: data[0].capital,
+            altSpellings: data[0].altSpellings,
+            region: data[0].region,
+            population: data[0].population,
+            timezones: data[0].timezones
 
-        _createClass(BookInfo, [{
-            key: 'componentDidMount',
-            value: function componentDidMount() {
-                var _this2 = this;
+          });
+        }).catch(function () {
+          main.setState({
+            infoStatus: 'error'
+          });
+        });
+      };
 
-                fetch('https://restcountries.eu/rest/v2/name/' + this.props.countryName).then(function (resp) {
-                    return resp.json();
-                }).then(function (data) {
-                    if (!data[0]) {
-                        _this2.setState({
-                            name: "No such country"
-                        });
-                    } else {
-                        var name = data[0].name;
-                        console.log(name);
-                        _this2.setState({
-                            name: name
-                        });
-                    }
-                });
-            }
-        }, {
-            key: 'render',
-            value: function render() {
-                if (this.state.name === false) {
-                    return null;
-                }
+      _this._handleSubmit = function (event) {
+        event.preventDefault();
+        _this._getCountryInfo(event.target.search.value);
+      };
 
-                return _react2.default.createElement(
-                    'h1',
-                    null,
-                    this.state.name
-                );
-            }
-        }]);
+      _this.state = {
+        name: undefined,
+        capital: undefined,
+        altSpellings: undefined,
+        region: undefined,
+        population: undefined,
+        timezones: undefined
 
-        return BookInfo;
-    }(_react2.default.Component);
+      };
+      return _this;
+    }
 
-    _reactDom2.default.render(_react2.default.createElement(BookInfo, { countryName: 'Colombia' }), document.querySelector('#app'));
+    _createClass(CountryApp, [{
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        this._getCountryInfo();
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _state = this.state,
+            name = _state.name,
+            capital = _state.capital,
+            altSpellings = _state.altSpellings,
+            region = _state.region,
+            population = _state.population,
+            timezones = _state.timezones,
+            infoStatus = _state.infoStatus;
+
+        var data = null;
+        if (infoStatus == 'loaded') {
+          data = _react2.default.createElement(
+            'div',
+            { className: 'CountryInfo' },
+            _react2.default.createElement(
+              'div',
+              { className: 'countryName' },
+              _react2.default.createElement(
+                'div',
+                null,
+                name,
+                ' ',
+                _react2.default.createElement('span', null)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'countryInfo' },
+              _react2.default.createElement(
+                'div',
+                null,
+                'Capital: ',
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  ' ',
+                  capital
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'Alternative Names: ',
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  ' ',
+                  altSpellings[0],
+                  ', ',
+                  altSpellings[1],
+                  ', ',
+                  altSpellings[2],
+                  ' '
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'Region: ',
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  ' ',
+                  region
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'Population: ',
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  ' ',
+                  population
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'Timezones: ',
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  ' ',
+                  timezones
+                )
+              )
+            )
+          );
+        } else if (infoStatus == 'loading') {
+          data = _react2.default.createElement(
+            'div',
+            { className: 'info loading' },
+            'Loading country data...'
+          );
+        } else if (infoStatus == 'error') {
+          data = _react2.default.createElement(
+            'div',
+            { className: 'info error' },
+            'Error while loading country data. Try again later.'
+          );
+        }
+        return _react2.default.createElement(
+          'div',
+          { className: 'CountryApp' },
+          _react2.default.createElement(
+            'div',
+            { className: 'CountryQuery' },
+            _react2.default.createElement(
+              'form',
+              { onSubmit: this._handleSubmit },
+              _react2.default.createElement('input', {
+                type: 'text',
+                name: 'search',
+                placeholder: 'Search a Country...'
+              })
+            )
+          ),
+          data
+        );
+      }
+    }]);
+
+    return CountryApp;
+  }(_react2.default.Component);
+
+  CountryApp.defaultProps = {
+    name: 'Colombia'
+  };
+
+
+  _reactDom2.default.render(_react2.default.createElement(CountryApp, null), document.getElementById('app'));
 });
 
 /***/ }),

@@ -1,1 +1,8 @@
 node_modules
+js/app.jsx
+js/app2.jsx
+js/trash.js
+index2.html
+webpack.config.js
+.gitignore
+package.json
